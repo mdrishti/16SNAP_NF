@@ -1,0 +1,41 @@
+BootStrap: library
+From: ubuntu:22.04
+
+%environment
+    # set up all essential environment variables
+    export PATH="/opt/emu/:/opt/minimap2-2.24_x64-linux/minimap2:/opt/minimap2-2.24_x64-linux/:/opt/miniconda3/bin/:/opt/miniconda3/bin/conda:$PATH"
+
+    # activate conda environment
+    source activate base
+    conda activate
+
+%post
+    # update and install essential dependencies
+    apt-get -y update
+    apt-get update && apt-get install -y build-essential bzip2 wget git default-jre unzip
+
+    # download, install, and update miniconda3
+    wget https://repo.anaconda.com/miniconda/Miniconda3-py37_23.1.0-1-Linux-x86_64.sh
+    bash Miniconda3-py37_23.1.0-1-Linux-x86_64.sh -b -f -p /opt/miniconda3/
+    rm Miniconda3*sh
+    
+    # download and install minimap2
+    wget https://github.com/lh3/minimap2/releases/download/v2.24/minimap2-2.24_x64-linux.tar.bz2 
+    tar -jxvf minimap2-2.24_x64-linux.tar.bz2 
+    mv minimap2-2.24_x64-linux /opt/
+    export PATH="/opt/miniconda3/bin:/opt/miniconda3/bin/conda:$PATH"
+    export PATH="/opt/minimap2-2.24_x64-linux/minimap2:$PATH"
+    rm minimap2-2.24_x64-linux.tar.bz2
+
+
+    # download and install emu
+    git clone https://gitlab.com/treangenlab/emu.git
+    mv emu /opt/	
+
+
+    # install dependencies via conda
+    conda install -c bioconda qcat yacrd nanofilt # qc softwares
+    conda install -c bioconda -c conda-forge flatten-dict
+    conda update --all
+
+
