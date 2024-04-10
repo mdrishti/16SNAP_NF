@@ -10,12 +10,13 @@ d) emu for classifying long reads to secies/strain level taxa [4]
 
 **Instructions to run the pipeline**
 1. [Download](https://zenodo.org/doi/10.5281/zenodo.10936159) the singularity image containing the Ubuntu 22.04 LTS distro and the 4 softwares (qcat, zacrd, nanofilt, emu).
+   You can also make your own singularity image using the 'sing_final.def' by running the command `apptainer build --remote sing_final.sif sing_final.def`.
 2. Clone this repository. Place input fastq files in 'data' folder. Place the singularity image in the same folder as your repository.
 3. Change the variables 'inputFile' and 'resultsPath' in 16SNAP.nf to the actual path. At the moment, these variables contain the path to an example file and results. 
 4. Run the pipeline 
    `nextflow run 16SNAP.nf -c nanoporeNF.config -with-singularity sing_final.sif`
 
-Kindly cite the following article, if you use this pipeline: 
+Please cite the following article, if you use this pipeline: 
 
 Disha Tandon, Yuan Dong, Siegfried Hapfelmeier. Pipeline for species-resolved full-length 16S rRNA amplicon nanopore sequencing analysis of low-complexity bacterial microbiota. https://doi.org/10.1101/2023.12.05.570138
 
